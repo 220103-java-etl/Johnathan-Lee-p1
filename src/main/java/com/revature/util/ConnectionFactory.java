@@ -18,8 +18,7 @@ public class ConnectionFactory {
 
     private ConnectionFactory() {
         dbProps = new Properties();
-        InputStream props = ConnectionFactory.class.getClassLoader().getResourceAsStream("connection.properties");
-
+        InputStream props = ConnectionFactory.class.getClassLoader().getResourceAsStream("connections.properties");
         try {
             dbProps.load(props);
         } catch(IOException e) {
@@ -47,6 +46,11 @@ public class ConnectionFactory {
      */
     public Connection getConnection() {
         Connection connection = null;
+        try {
+            Class.forName(dbProps.getProperty("driver"));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         String url = dbProps.getProperty("url");
         String username = dbProps.getProperty("username");
@@ -60,5 +64,4 @@ public class ConnectionFactory {
 
         return connection;
     }
-
 }

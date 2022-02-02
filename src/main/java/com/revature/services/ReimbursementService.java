@@ -1,8 +1,10 @@
 package com.revature.services;
 
+import com.revature.exceptions.ReimbursementException;
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
 import com.revature.models.User;
+import com.revature.repositories.ReimbursementDAO;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
  * </ul>
  */
 public class ReimbursementService {
+    ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
 
     /**
      * <ul>
@@ -41,13 +44,22 @@ public class ReimbursementService {
      * After processing, the reimbursement will have its status changed to either APPROVED or DENIED.
      */
     public Reimbursement process(Reimbursement unprocessedReimbursement, Status finalStatus, User resolver) {
-        return null;
+        if(reimbursementDAO.getById(unprocessedReimbursement.getId()).isPresent()) {
+            return reimbursementDAO.updateReimbursementStatus(unprocessedReimbursement, finalStatus, resolver);
+        } else {
+            ReimbursementException reimbursementException = new ReimbursementException("Reimbursement id not found");
+            throw reimbursementException;
+        }
+    }
+
+    public List<Reimbursement> getAll() {
+        return reimbursementDAO.getAll();
     }
 
     /**
      * Should retrieve all reimbursements with the correct status.
      */
     public List<Reimbursement> getReimbursementsByStatus(Status status) {
-        return Collections.emptyList();
+        return reimbursementDAO.getByStatus(status);
     }
 }

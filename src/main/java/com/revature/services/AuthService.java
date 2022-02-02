@@ -1,6 +1,10 @@
 package com.revature.services;
 
+import com.revature.exceptions.ReimbursementException;
+import com.revature.exceptions.InvalidUsernameException;
+import com.revature.exceptions.RegistrationUnsuccessfulException;
 import com.revature.models.User;
+import com.revature.repositories.UserDAO;
 
 import java.util.Optional;
 
@@ -17,7 +21,7 @@ import java.util.Optional;
  * </ul>
  */
 public class AuthService {
-
+    private UserDAO userDAO = new UserDAO();
     /**
      * <ul>
      *     <li>Needs to check for existing users with username/email provided.</li>
@@ -28,7 +32,22 @@ public class AuthService {
      * </ul>
      */
     public User login(String username, String password) {
-        return null;
+       Optional<User> user = userDAO.getByUsername(username);
+
+       if(user.isPresent()) {
+           if(username.equals(user.get().getUsername())) {
+               if(user.get().getPassword().equals(password)) {
+                   return user.get();
+               } else {
+                   ReimbursementException passwordException = new ReimbursementException("Invalid password.");
+                   throw passwordException;
+               }
+           } else {
+               InvalidUsernameException usernameException = new InvalidUsernameException("Invalid Username.");
+               throw usernameException;
+           }
+       }
+       return null;
     }
 
     /**
@@ -45,7 +64,16 @@ public class AuthService {
      * After registration, the id will be a positive integer.
      */
     public User register(User userToBeRegistered) {
-        return null;
+       if(userDAO.getByUsername(userToBeRegistered.getUsername()).isPresent()) {
+           RegistrationUnsuccessfulException usernameException = new RegistrationUnsuccessfulException("Username already exists");
+           throw usernameException;
+       } else if(userDAO.getByEmail(userToBeRegistered.getEmail()).isPresent()) {
+           RegistrationUnsuccessfulException emailException = new RegistrationUnsuccessfulException("Email already exists");
+           throw emailException;
+       }
+       else {
+            return userDAO.create(userToBeRegistered);
+       }
     }
 
     /**
