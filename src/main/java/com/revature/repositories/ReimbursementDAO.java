@@ -69,6 +69,34 @@ public class ReimbursementDAO {
         return Collections.emptyList();
     }
 
+    public List<Reimbursement> getByUsername(String username) {
+        String sql = "select * from reimbursement_requests where author_id = ?";
+        List<Reimbursement> reimbursementList = new ArrayList<>();
+
+        try(Connection conn = cf.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            int id = userDAO.getByUsername(username).get().getId();
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Reimbursement r = new Reimbursement(
+                    rs.getInt("id"),
+                    Status.valueOf(rs.getString("status")),
+                    userDAO.getById(rs.getInt("author_id")),
+                    userDAO.getById(rs.getInt("resolver_id")),
+                    rs.getString("description"),
+                    rs.getDouble("amount")
+                );
+                reimbursementList.add(r);
+            }
+            return reimbursementList;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
     /**
      * Should retrieve a List of Reimbursements from the DB with the corresponding Status or an empty List if there are no matches.
      */
@@ -83,12 +111,12 @@ public class ReimbursementDAO {
 
             while(rs.next()) {
                 Reimbursement r = new Reimbursement(
-                        rs.getInt("id"),
-                        Status.valueOf(rs.getString("status")),
-                        userDAO.getById(rs.getInt("author_id")),
-                        userDAO.getById(rs.getInt("resolver_id")),
-                        rs.getString("description"),
-                        rs.getDouble("amount")
+                    rs.getInt("id"),
+                    Status.valueOf(rs.getString("status")),
+                    userDAO.getById(rs.getInt("author_id")),
+                    userDAO.getById(rs.getInt("resolver_id")),
+                    rs.getString("description"),
+                    rs.getDouble("amount")
                 );
                 reimbursementsList.add(r);
             }
@@ -101,11 +129,20 @@ public class ReimbursementDAO {
 
     public Reimbursement updateReimbursementStatus(Reimbursement reimbursement, Status status, User resolver) {
         if(reimbursement.getStatus().equals(Status.PENDING)) {
-            reimbursement.setStatus(status);
-            reimbursement.setResolver(resolver);
-            return update(reimbursement);
+            String sql = "update reimbursement_requests set Status = ?, resolver_id = ? where id = ?";
+            try(Connection conn = cf.getConnection()) {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, status.toString().toUpperCase());
+                ps.setInt(2, resolver.getId());
+                ps.setInt(3, reimbursement.getId());
+                System.out.println(ps);
+                ps.execute();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+            return reimbursement;
         } else {
-            return null;
+            return reimbursement;
         }
     }
 
@@ -140,7 +177,7 @@ public class ReimbursementDAO {
      * </ul>
      */
     public Reimbursement update(Reimbursement unprocessedReimbursement) {
-    	String sql = "insert into reimbursement_requests values (default, ?, ?, ?, ?, ?) returning *";
+        String sql = "update reimbursement_requests set status = ?, author_id = ?, resolver_id = ?, description = ?, amount = ? where id = ?";
 
         try(Connection conn = cf.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -149,15 +186,12 @@ public class ReimbursementDAO {
             ps.setInt(3, unprocessedReimbursement.getResolver().getId());
             ps.setString(4, unprocessedReimbursement.getDescription());
             ps.setDouble(5, unprocessedReimbursement.getAmount());
+            ps.setInt(6, unprocessedReimbursement.getId());
 
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                unprocessedReimbursement.setId(rs.getInt("id"));
-                return unprocessedReimbursement;
-            }
+            ps.execute();
         } catch(SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return unprocessedReimbursement;
     }
 }

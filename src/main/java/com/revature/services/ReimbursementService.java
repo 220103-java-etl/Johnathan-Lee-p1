@@ -56,6 +56,10 @@ public class ReimbursementService {
         return reimbursementDAO.getAll();
     }
 
+    public List<Reimbursement> getByUsername(String username) {
+        return reimbursementDAO.getByUsername(username);
+    }
+
     /**
      * Should retrieve all reimbursements with the correct status.
      */

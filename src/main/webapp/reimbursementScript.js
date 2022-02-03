@@ -15,7 +15,7 @@ async function getData() {
 }
 
 function populateData(res) {
-
+    console.log(res);
     let reimbursementDiv = document.getElementById('reimbursements');
     
     let reimbursementTable = document.createElement('table');
@@ -52,7 +52,6 @@ function populateData(res) {
         tdResolver.innerHTML = r.resolver;
         tr.append(tdResolver);
 
-        console.log(r.remainingReimbursement);
         let tdAmount = document.createElement('td');
         tdAmount.innerHTML = r.amount;
         tr.append(tdAmount);

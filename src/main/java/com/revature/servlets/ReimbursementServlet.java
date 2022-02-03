@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReimbursementServlet extends HttpServlet {
@@ -21,20 +22,24 @@ public class ReimbursementServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
-        List<Reimbursement> reimbursementList = reimbursementService.getAll();
-
-        if(session.getAttribute("role").toString().equalsIgnoreCase("employee")) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(reimbursementList);
-            response.setContentType("application/json");
-            response.getWriter().write(json);
+        List<Reimbursement> reimbursementList;
+        if(session.getAttribute("role").toString().equalsIgnoreCase("finance manager")) {
+            reimbursementList = reimbursementService.getAll();
         } else {
-            response.sendRedirect("");
+            reimbursementList = reimbursementService.getByUsername(session.getAttribute("username").toString());
         }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(reimbursementList);
+        response.setContentType("application/json");
+        response.getWriter().write(json);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("role").toString().equalsIgnoreCase("finance manager")) {
+            response.sendRedirect("reimbursementAdmin.html");
+        }
     }
 }
