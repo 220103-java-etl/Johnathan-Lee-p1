@@ -38,8 +38,11 @@ public class ReimbursementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
+        System.out.println(session.getAttribute("role").toString());
         if(session.getAttribute("role").toString().equalsIgnoreCase("finance manager")) {
             response.sendRedirect("reimbursementAdmin.html");
+        } else {
+            response.sendRedirect("reimbursementUser");
         }
     }
 }

@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -27,15 +28,23 @@ public class adminServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String data = request.getReader().lines().collect(Collectors.joining());
-        String[] dataArray = data.split("\\t|,|;|\\.|\\?|!|-|:|@|\\[|\\]|\\(|\\)|\\{|\\}|_|\\*|/");
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("role").toString().equalsIgnoreCase("finance manager")) {
+            String data = request.getReader().lines().collect(Collectors.joining());
+            String[] dataArray = data.split("\\t|,|;|\\.|\\?|!|-|:|@|\\[|\\]|\\(|\\)|\\{|\\}|_|\\*|/");
 //        for(int i = 0; i < dataArray.length; i++) {
 //            System.out.println(i + ": " + dataArray[i]);
 //        }
-        Integer id = Integer.parseInt(dataArray[2]);
-        String status = dataArray[4].replaceAll("\"", "");
-        String username = dataArray[6].replaceAll("\"", "");
-        Reimbursement updatedReimbursement = reimbursementService.process(reimbursementDAO.getById(id).get(), Status.valueOf(status), userDAO.getByUsername(username).get());
-        response.sendRedirect("reimbursements.html");
+            Integer id = Integer.parseInt(dataArray[2]);
+            String status = dataArray[4].replaceAll("\"", "");
+            String username = dataArray[6].replaceAll("\"", "");
+            Reimbursement updatedReimbursement = reimbursementService.process(reimbursementDAO.getById(id).get(),
+                    Status.valueOf(status),
+                    userDAO.getByUsername(session.getAttribute("username").toString()).get()
+            );
+            response.sendRedirect("reimbursements.html");
+        } else {
+            response.sendRedirect("reimbursements.html");
+        }
     }
 }

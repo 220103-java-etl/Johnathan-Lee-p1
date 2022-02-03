@@ -141,9 +141,9 @@ public class ReimbursementDAO {
                 e.printStackTrace();
             }
             return reimbursement;
-        } else {
-            return reimbursement;
         }
+        return reimbursement;
+
     }
 
     public Reimbursement create(Reimbursement newReimbursementRequest) {

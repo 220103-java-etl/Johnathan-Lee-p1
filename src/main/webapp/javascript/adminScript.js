@@ -46,34 +46,39 @@ function populateData(res) {
         let tdAuthor = document.createElement('td');
         tdAuthor.innerHTML = r.author.username;
         tr.append(tdAuthor);
+        console.log(r.author.username);
 
         let tdResolver = document.createElement('td');
-        tdResolver.innerHTML = r.resolver;
+        if(r.resolver != null) {
+            tdResolver.innerHTML = r.resolver.username;
+        } else {
+            tdResolver.innerHTML = '';
+        }
         tr.append(tdResolver);
 
         let tdAmount = document.createElement('td');
-        tdAmount.innerHTML = r.amount;
+        tdAmount.innerHTML = r.amount.toFixed(2);
         tr.append(tdAmount);
 
         let tdDescription = document.createElement('td');
         tdDescription.innerHTML = r.description;
         tr.append(tdDescription);
 
-        // if(r.status == 'PENDING') {
-        //     let tdChangeStatus = document.createElement('td');
-        //     let select = document.createElement('select');
-        //     let option1 = document.createElement('option');
-        //     let option2 = document.createElement('option');
-        //     select.id = 'newStatus';
-        //     option1.setAttribute('value', 'APPROVED');
-        //     option1.text = 'Approve';
-        //     option2.setAttribute('value', 'DENIED');
-        //     option2.text = 'Deny';
-        //     select.appendChild(option1);
-        //     select.appendChild(option2);
-        //     tdChangeStatus.append(select);
-        //     tr.append(tdChangeStatus);
-        // }
+        // Only appears if status is pending but unsure how to access select value inside condition
+        if(r.status == 'PENDING') {
+            let tdChangeStatus = document.createElement('td');
+            let select = document.createElement('select');
+            let option1 = document.createElement('option');
+            let option2 = document.createElement('option');
+            option1.setAttribute('value', 'APPROVED');
+            option1.text = 'Approve';
+            option2.setAttribute('value', 'DENIED');
+            option2.text = 'Deny';
+            select.appendChild(option1);
+            select.appendChild(option2);
+            tdChangeStatus.append(select);
+            tr.append(tdChangeStatus);
+        }
         let tdChangeStatus = document.createElement('td');
         let select = document.createElement('select');
         let option1 = document.createElement('option');
@@ -102,7 +107,7 @@ function populateData(res) {
 }
 
 function update(id, status, username) {
-    console.log(status);
+    console.log('author username: ' + username);
     let data = {
         id: id,
         status: status, 

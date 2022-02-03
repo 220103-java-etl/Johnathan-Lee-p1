@@ -15,7 +15,6 @@ async function getData() {
 }
 
 function populateData(res) {
-    console.log(res);
     let reimbursementDiv = document.getElementById('reimbursements');
     
     let reimbursementTable = document.createElement('table');
@@ -37,7 +36,7 @@ function populateData(res) {
         let tr = document.createElement('tr');
 
         let tdID = document.createElement('td');
-        tdID.innerHTML = r.author.id;
+        tdID.innerHTML = r.id;
         tr.append(tdID);
 
         let tdStatus = document.createElement('td');
@@ -49,11 +48,15 @@ function populateData(res) {
         tr.append(tdAuthor);
 
         let tdResolver = document.createElement('td');
-        tdResolver.innerHTML = r.resolver;
+        if(r.resolver != null) {
+            tdResolver.innerHTML = r.resolver.username;
+        } else {
+            tdResolver.innerHTML = '';
+        }
         tr.append(tdResolver);
 
         let tdAmount = document.createElement('td');
-        tdAmount.innerHTML = r.amount;
+        tdAmount.innerHTML = r.amount.toFixed(2);
         tr.append(tdAmount);
 
         let tdDescription = document.createElement('td');
