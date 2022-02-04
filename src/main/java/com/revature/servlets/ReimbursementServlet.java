@@ -2,9 +2,6 @@ package com.revature.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
-import com.revature.models.Role;
-import com.revature.models.Status;
-import com.revature.models.User;
 import com.revature.services.ReimbursementService;
 
 import javax.servlet.ServletException;
@@ -13,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReimbursementServlet extends HttpServlet {
@@ -38,11 +34,11 @@ public class ReimbursementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
-        System.out.println(session.getAttribute("role").toString());
+//        System.out.println(session.getAttribute("role").toString());
         if(session.getAttribute("role").toString().equalsIgnoreCase("finance manager")) {
-            response.sendRedirect("reimbursementAdmin.html");
+            response.sendRedirect("reimbursementadmin.html");
         } else {
-            response.sendRedirect("reimbursementUser");
+            response.sendRedirect("newreimbursementrequest.html");
         }
     }
 }

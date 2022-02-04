@@ -1,8 +1,6 @@
 package com.revature.servlets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
-import com.revature.models.Role;
 import com.revature.models.Status;
 import com.revature.repositories.ReimbursementDAO;
 import com.revature.repositories.UserDAO;
@@ -16,14 +14,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-public class adminServlet extends HttpServlet {
+public class AdminServlet extends HttpServlet {
     private ReimbursementService reimbursementService = new ReimbursementService();
     private ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
     private UserDAO userDAO = new UserDAO();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-       response.sendRedirect("reimbursementAdmin.html");
+       response.sendRedirect("reimbursementadmin.html");
 
     }
 

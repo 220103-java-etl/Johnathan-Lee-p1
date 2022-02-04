@@ -33,7 +33,6 @@ public class AuthService {
      */
     public User login(String username, String password) {
        Optional<User> user = userDAO.getByUsername(username);
-
        if(user.isPresent()) {
            if(username.equals(user.get().getUsername())) {
                if(user.get().getPassword().equals(password)) {
@@ -46,8 +45,10 @@ public class AuthService {
                InvalidUsernameException usernameException = new InvalidUsernameException("Invalid Username.");
                throw usernameException;
            }
+       } else {
+           InvalidUsernameException usernameException = new InvalidUsernameException("Username not found");
+           throw usernameException;
        }
-       return null;
     }
 
     /**

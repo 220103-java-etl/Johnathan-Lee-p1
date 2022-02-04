@@ -46,7 +46,6 @@ function populateData(res) {
         let tdAuthor = document.createElement('td');
         tdAuthor.innerHTML = r.author.username;
         tr.append(tdAuthor);
-        console.log(r.author.username);
 
         let tdResolver = document.createElement('td');
         if(r.resolver != null) {
@@ -78,28 +77,36 @@ function populateData(res) {
             select.appendChild(option2);
             tdChangeStatus.append(select);
             tr.append(tdChangeStatus);
+
+            let tdUpdate = document.createElement('td');
+            let updateButton = document.createElement('button');
+            updateButton.onclick = function() {update(r.id, select.value , r.author.username); };
+
+            updateButton.innerHTML = "Save";
+            tdUpdate.append(updateButton);
+            tr.append(tdUpdate);
         }
-        let tdChangeStatus = document.createElement('td');
-        let select = document.createElement('select');
-        let option1 = document.createElement('option');
-        let option2 = document.createElement('option');
-        select.id = 'newStatus';
-        option1.setAttribute('value', 'APPROVED');
-        option1.text = 'Approve';
-        option2.setAttribute('value', 'DENIED');
-        option2.text = 'Deny';
-        select.appendChild(option1);
-        select.appendChild(option2);
-        tdChangeStatus.append(select);
-        tr.append(tdChangeStatus);
+        // let tdChangeStatus = document.createElement('td');
+        // let select = document.createElement('select');
+        // let option1 = document.createElement('option');
+        // let option2 = document.createElement('option');
+        // select.id = 'newStatus';
+        // option1.setAttribute('value', 'APPROVED');
+        // option1.text = 'Approve';
+        // option2.setAttribute('value', 'DENIED');
+        // option2.text = 'Deny';
+        // select.appendChild(option1);
+        // select.appendChild(option2);
+        // tdChangeStatus.append(select);
+        // tr.append(tdChangeStatus);
 
-        let tdUpdate = document.createElement('td');
-        let updateButton = document.createElement('button');
-        updateButton.onclick = function() {update(r.id, select.value , r.author.username); };
+        // let tdUpdate = document.createElement('td');
+        // let updateButton = document.createElement('button');
+        // updateButton.onclick = function() {update(r.id, select.value , r.author.username); };
 
-        updateButton.innerHTML = "Save";
-        tdUpdate.append(updateButton);
-        tr.append(tdUpdate);
+        // updateButton.innerHTML = "Save";
+        // tdUpdate.append(updateButton);
+        // tr.append(tdUpdate);
 
         reimbursementTable.append(tr);
     }
@@ -107,7 +114,6 @@ function populateData(res) {
 }
 
 function update(id, status, username) {
-    console.log('author username: ' + username);
     let data = {
         id: id,
         status: status, 

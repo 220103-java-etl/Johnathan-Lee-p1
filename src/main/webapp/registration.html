@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Register</title>
 </head>
 <body>
     <form method="post" action="register">
@@ -30,4 +30,45 @@
         <input type="submit" value="Register">
     </form>
 </body>
-</html>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ERS</title>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles/login.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <div id="emptyspace">
+        <h1 style="color:#60a0ff;">Register</h1>
+    </div>
+
+    <!-- Registration Form -->
+    <form method='post' action='register'>
+        <input type="text" name="firstname" placeholder="First Name">
+        <input type="text" name="lastname" placeholder="Last Name">
+        <input type="text" name="email" placeholder="Email">
+        <input type="text" name="username" placeholder="Username">
+        <input type="password" name="password" placeholder="Password">
+        <div id="roleselect">
+            <select id="regRole" name="role">
+                <option value="employee">Employee</option>
+                <option value="finance_manager">Finance Manager</option>
+            </select>
+        </div>
+        <input type="submit" value="Register">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="/login">Return to Login</a>
+    </div>
+
+  </div>
+</div>

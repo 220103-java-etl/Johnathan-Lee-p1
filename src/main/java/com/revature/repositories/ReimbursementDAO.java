@@ -135,10 +135,12 @@ public class ReimbursementDAO {
                 ps.setString(1, status.toString().toUpperCase());
                 ps.setInt(2, resolver.getId());
                 ps.setInt(3, reimbursement.getId());
-                System.out.println(ps);
                 ps.execute();
             } catch(SQLException e) {
                 e.printStackTrace();
+            }
+            if(status.toString().equalsIgnoreCase("approved")) {
+                userDAO.update(reimbursement.getAuthor());
             }
             return reimbursement;
         }
@@ -156,7 +158,6 @@ public class ReimbursementDAO {
             ps.setObject(3, null);
             ps.setString(4, newReimbursementRequest.getDescription());
             ps.setDouble(5, newReimbursementRequest.getAmount());
-            System.out.println(ps);
 
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {

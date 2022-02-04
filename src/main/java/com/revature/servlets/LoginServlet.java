@@ -31,6 +31,8 @@ public class LoginServlet extends HttpServlet{
             session.setAttribute("role", user.getRole().toString());
 
             response.sendRedirect("reimbursements.html");
+        } else {
+            response.sendError(404, "Username not found");
         }
     }
 }
