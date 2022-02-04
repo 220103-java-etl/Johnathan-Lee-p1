@@ -1,0 +1,55 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request</title>
+</head>
+<body>
+    <div id="requestDiv">
+        <form method="post" action="/request">
+            <label for="reqAmount">Amount: </label>
+            <input type="number" step="0.01" min="0" max="1000" id="reqAmount" name="amount">
+            <br/>
+            <label for="reqDesc">Description: </label>
+            <input type="text" id="reqDesc" name="description">
+            <br/>
+            <input type="submit" value="Submit Request">
+        </form>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ERS</title>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles/login.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="styles/request.css">
+</head>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <div id="emptyspace">
+        <h1 style="color:#60a0ff;">Request</h1>
+    </div>
+
+    <!-- Request Form -->
+    <form method='post' action='/request'>
+        <input type="number" step="0.01" min="0" max="1000" name="amount" placeholder="Amount">
+        </br>
+        <input id="descriptionBox"type="textarea" name="description" placeholder="Description">
+        </br>
+        <input id="submitbutton"type="submit" value="Submit Request">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="/reimbursements.html">Return</a>
+    </div>
+
+  </div>
+</div>

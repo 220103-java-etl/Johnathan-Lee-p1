@@ -1,0 +1,54 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ERS</title>
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body>
+    <H1>Employee Reimbursement System</H1>
+    <form method="post" action="login">
+        <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" name="username">
+            <br/>
+        <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" name="password">
+            <br/>
+        <input type="submit" value="Login" />
+    </form>
+    <a href="/register">
+        <button>Register</button>
+    </a>
+</body> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ERS</title>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles/login.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <div id="emptyspace">
+        <h1 style="color:#60a0ff;">ERS</h1>
+    </div>
+
+    <!-- Login Form -->
+    <form method='post' action='login'>
+        <input type="text" id="login"  name="username" placeholder="Username">
+        <input type="password" id="password"  name="password" placeholder="Password">
+        <input type="submit" value="Login">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="/register">Register</a>
+    </div>
+
+  </div>
+</div>

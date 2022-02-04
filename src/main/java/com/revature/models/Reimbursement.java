@@ -14,6 +14,7 @@ package com.revature.models;
  *
  */
 public class Reimbursement extends AbstractReimbursement {
+    private String description;
 
     public Reimbursement() {
         super();
@@ -25,5 +26,14 @@ public class Reimbursement extends AbstractReimbursement {
      */
     public Reimbursement(int id, Status status, User author, User resolver, double amount) {
         super(id, status, author, resolver, amount);
+    }
+
+    public Reimbursement(int id, Status status, User author, User resolver, String description, double amount) {
+        super(id, status, author, resolver, amount);
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 }

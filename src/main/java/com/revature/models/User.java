@@ -15,10 +15,10 @@ package com.revature.models;
  *
  */
 public class User extends AbstractUser {
-
-    public User() {
-        super();
-    }
+    private String email;
+    private String firstname;
+    private String lastname;
+    private double remainingReimbursement = 1000.00;
 
     /**
      * This includes the minimum parameters needed for the {@link com.revature.models.AbstractUser} class.
@@ -26,5 +26,28 @@ public class User extends AbstractUser {
      */
     public User(int id, String username, String password, Role role) {
         super(id, username, password, role);
+    }
+
+    public User(int id, String firstname, String lastname, String email, String username, String password, Role role) {
+        super(id, username, password, role);
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public double getRemainingReimbursement() {
+        return remainingReimbursement;
     }
 }
