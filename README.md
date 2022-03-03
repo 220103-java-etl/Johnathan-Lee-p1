@@ -1,7 +1,4 @@
-# ERS-P1-Skeleton
-This repository contains the skeleton for the P1 design.
-
-# project-1
+# ERS-Project 1
 > TRMS, or Tuition Reimbursement Management System is a full-stack web application that allows employees to submit requests for reimbursements for courses, events, and certifications. These requests can then be approved or rejected by the employee's direct supervisor, department head, and a benefits coordinator while the employee is able to track the status of their requests.
 You will be required to present a 10 minute demo of your application and its features.  
 
